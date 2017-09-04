@@ -32,7 +32,7 @@ model = network_utils.create_lstm_network(num_frequency_dimensions=freq_space_di
 if os.path.isfile(model_filename):
 	model.load_weights(model_filename)
 
-num_iters = 50 			#Number of iterations for training
+num_iters = 1000 			#Number of iterations for training
 epochs_per_iter = 25	#Number of iterations before we save our model
 batch_size = 5			#Number of training examples pushed to the GPU per batch.
 						#Larger batch sizes require more memory, but training will be faster
@@ -45,7 +45,7 @@ while cur_iter < num_iters:
 	#The moral way to handle this is to manually split 
 	#your data into two sets and run cross-validation after 
 	#you've trained the model for some number of epochs
-	history = model.fit(X_train, y_train, batch_size=batch_size, nb_epoch=epochs_per_iter, verbose=1, validation_split=0.0)
+	history = model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs_per_iter, verbose=1, validation_split=0.0)
 	cur_iter += epochs_per_iter
 print ('Training complete!')
 model.save_weights(model_basename + str(cur_iter))
